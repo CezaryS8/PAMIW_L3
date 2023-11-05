@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace P04WeatherForecastAPI.Client.Services.UserServices
 {
@@ -35,8 +36,9 @@ namespace P04WeatherForecastAPI.Client.Services.UserServices
             return result;
         }
         public async Task<List<User>> GetUsers()
-        {
-            var response = await _httpClient.GetAsync("http://localhost:8080/api/v1/user/all");
+        {   
+            string request = _appSettings.BaseSpringAPIUrl + _appSettings.BaseUserEndpoint.Base_url + _appSettings.BaseUserEndpoint.GetAllUsersEndpoint;
+            var response = await _httpClient.GetAsync(request);
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<List<User>>(json);
             Console.WriteLine(result);
