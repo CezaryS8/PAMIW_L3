@@ -26,21 +26,20 @@ namespace P04WeatherForecastAPI.Client.Services.UserServices
             _httpClient= httpClient;
             _appSettings= appSettings.Value;
         }
-
-        public async Task<User> GetUserByIdAsync(long userId)
-        {
-            var response = await _httpClient.GetAsync("http://localhost:8080/api/v1/user/1");
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<User>(json);
-            Console.WriteLine(result);
-            return result;
-        }
         public async Task<List<User>> GetUsers()
         {   
             string request = _appSettings.BaseSpringAPIUrl + _appSettings.BaseUserEndpoint.Base_url + _appSettings.BaseUserEndpoint.GetAllUsersEndpoint;
             var response = await _httpClient.GetAsync(request);
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<List<User>>(json);
+            Console.WriteLine(result);
+            return result;
+        }
+        public async Task<User> GetUserByIdAsync(long userId)
+        {
+            var response = await _httpClient.GetAsync("http://localhost:8080/api/v1/user/1");
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<User>(json);
             Console.WriteLine(result);
             return result;
         }
